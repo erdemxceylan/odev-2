@@ -1,14 +1,7 @@
-.header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 254px;
-  height: 65px;
-  margin-bottom: 17px;
-}
-
+.header,
 .container,
-.line {
+.row,
+.box {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,6 +12,35 @@
   height: 100vh;
 }
 
-/* .line {
-   flex-direction: row;
-} */
+.header {
+  width: 254px;
+  height: 65px;
+  margin-bottom: 17px;
+}
+
+.box {
+  width: 80px;
+  height: 80px;
+  margin: 5px;
+  border: 10px solid rgba(0, 0, 0, 1);
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+.box:hover {
+  background-color: grey;
+  cursor: pointer;
+}
+
+.box-o:hover {
+  background-color: rgba(0, 38, 237, 1);
+}
+
+.box-x:hover {
+  background-color: rgba(255, 5, 5, 1);
+}
+
+.box-o:hover > svg > path,
+.box-x:hover > svg > path {
+  fill: rgba(255, 255, 255, 1) !important;
+}
