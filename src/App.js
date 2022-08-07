@@ -1,23 +1,43 @@
 import React, { useState } from 'react';
-import { header } from './components/svgs';
-import { x } from './components/svgs';
-import { o } from './components/svgs';
-import Box from './components/Box';
+import { header } from './assets/svgs';
+import { x } from './assets/svgs';
+import { o } from './assets/svgs';
 import './App.css';
 
-function App() {
-   const boxStates = [null, 'X', 'O'];
-   const initialState = [];
+const X = 'X';
+const O = 'O';
+const boxStates = [null, X, O];
+const initialGameState = [];
+for (let i = 0; i < 9; i++) {
+   initialGameState.push(boxStates[0]);
+}
 
-   for (let i = 0; i < 9; i++) {
-      initialState.push(boxStates[0]);
-   }
+const gameOver = array => (
+   (array[0] === O && array[1] === O && array[2] === O) ||
+   (array[3] === O && array[4] === O && array[5] === O) ||
+   (array[6] === O && array[7] === O && array[8] === O) ||
+   (array[0] === O && array[3] === O && array[6] === O) ||
+   (array[1] === O && array[4] === O && array[7] === O) ||
+   (array[2] === O && array[5] === O && array[8] === O) ||
+   (array[0] === O && array[4] === O && array[8] === O) ||
+   (array[2] === O && array[4] === O && array[6] === O) ||
+   (array[0] === X && array[1] === X && array[2] === X) ||
+   (array[3] === X && array[4] === X && array[5] === X) ||
+   (array[6] === X && array[7] === X && array[8] === X) ||
+   (array[0] === X && array[3] === X && array[6] === X) ||
+   (array[1] === X && array[4] === X && array[7] === X) ||
+   (array[2] === X && array[5] === X && array[8] === X) ||
+   (array[0] === X && array[4] === X && array[8] === X) ||
+   (array[2] === X && array[4] === X && array[6] === X)
+);
 
-   const [gameState, setGameState] = useState({ states: initialState });
+export default function App() {
+   const [gameState, setGameState] = useState(initialGameState);
 
-   const switchState = (newState, index) => setGameState(currentState => {
-      currentState.states[index] = newState;
-      return { states: currentState.states };
+   const switchState = (newBoxState, index) => setGameState(currentGameState => {
+      const newGameState = [...currentGameState];
+      newGameState[index] = newBoxState;
+      return newGameState;
    });
 
    function clickHandler(state, index) {
@@ -37,18 +57,19 @@ function App() {
       }
    }
 
-   const ticTacToe = gameState.states.map((state, index) => {
-      const className = state === boxStates[1] ? 'box box-x' : state === boxStates[2] ? 'box box-o' : 'box';
-      const content = state === boxStates[1] ? x : state === boxStates[2] ? o : null;
-      return (
-         <Box
-            key={index}
-            className={className}
-            content={content}
-            onClick={() => clickHandler(state, index)}
-         />
-      );
-   });
+   const ticTacToe = gameState.map((state, index) => (
+      <div
+         key={index}
+         className={state === boxStates[1] ? 'box box-x' : state === boxStates[2] ? 'box box-o' : 'box'}
+         onClick={() => clickHandler(state, index)}
+      >
+         {state === boxStates[1] ? x : state === boxStates[2] ? o : null}
+      </div>
+   ));
+
+   if (gameOver(gameState)) {
+      console.log('Game over');
+   }
 
    return (
       <div className='container'>
@@ -73,5 +94,3 @@ function App() {
       </div>
    );
 }
-
-export default App;

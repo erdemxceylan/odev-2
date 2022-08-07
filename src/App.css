@@ -28,7 +28,7 @@
 }
 
 .box:hover {
-  background-color: grey;
+  background-color: rgba(140, 140, 140, 1);
   cursor: pointer;
 }
 
