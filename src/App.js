@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { header } from './assets/svgs';
-import { x } from './assets/svgs';
-import { o } from './assets/svgs';
 import './App.css';
+import { o } from './assets/svgs';
+import { x } from './assets/svgs';
 
 const X = 'X';
 const O = 'O';
@@ -12,44 +12,45 @@ for (let i = 0; i < 9; i++) {
    initialGameState.push(boxStates[0]);
 }
 
-const gameOver = array => (
-   (array[0] === O && array[1] === O && array[2] === O) ||
-   (array[3] === O && array[4] === O && array[5] === O) ||
-   (array[6] === O && array[7] === O && array[8] === O) ||
-   (array[0] === O && array[3] === O && array[6] === O) ||
-   (array[1] === O && array[4] === O && array[7] === O) ||
-   (array[2] === O && array[5] === O && array[8] === O) ||
-   (array[0] === O && array[4] === O && array[8] === O) ||
-   (array[2] === O && array[4] === O && array[6] === O) ||
-   (array[0] === X && array[1] === X && array[2] === X) ||
-   (array[3] === X && array[4] === X && array[5] === X) ||
-   (array[6] === X && array[7] === X && array[8] === X) ||
-   (array[0] === X && array[3] === X && array[6] === X) ||
-   (array[1] === X && array[4] === X && array[7] === X) ||
-   (array[2] === X && array[5] === X && array[8] === X) ||
-   (array[0] === X && array[4] === X && array[8] === X) ||
-   (array[2] === X && array[4] === X && array[6] === X)
-);
+const gameOverIndexes = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+
+const gameOver = array => {
+   const gameOverStates = [O, X];
+
+   gameOverIndexes.forEach(indexSet /* [0, 1, 2], ... */ => {
+      gameOverStates.forEach(state /* O, or X*/ => {
+         if (array[indexSet[0]] === state && array[indexSet[1]] === state && array[indexSet[2]] === state) {
+            console.log({ isGameOver: true, boxIndexes: indexSet, state: state });
+            return { isGameOver: true, boxIndexes: indexSet, box: state };
+         }
+      });
+   });
+
+   return { isGameOver: false, boxIndexes: null, box: null };
+};
 
 export default function App() {
    const [gameState, setGameState] = useState(initialGameState);
 
-   const switchState = (newBoxState, index) => setGameState(currentGameState => {
-      const newGameState = [...currentGameState];
-      newGameState[index] = newBoxState;
-      return newGameState;
-   });
+   const switchState = (newBoxState, index) => {
+      setGameState(currentGameState => {
+         const newGameState = [...currentGameState];
+         newGameState[index] = newBoxState;
+         console.log(currentGameState, newGameState);
+         return newGameState;
+      });
+   };
 
-   function clickHandler(state, index) {
-      switch (state) {
-         case boxStates[0]:
-            switchState(boxStates[1], index);
+   function clickHandler(boxState, index) {
+      switch (boxState) {
+         case null:
+            switchState(X, index);
             break;
-         case boxStates[1]:
-            switchState(boxStates[2], index);
+         case X:
+            switchState(O, index);
             break;
-         case boxStates[2]:
-            switchState(boxStates[0], index);
+         case O:
+            switchState(null, index);
             break;
          default:
             alert('Something went wrong');
@@ -57,19 +58,27 @@ export default function App() {
       }
    }
 
-   const ticTacToe = gameState.map((state, index) => (
-      <div
-         key={index}
-         className={state === boxStates[1] ? 'box box-x' : state === boxStates[2] ? 'box box-o' : 'box'}
-         onClick={() => clickHandler(state, index)}
-      >
-         {state === boxStates[1] ? x : state === boxStates[2] ? o : null}
-      </div>
-   ));
+   const ticTacToe = gameState.map((state, index) => {
+      return (
+         <div
+            className={state === X ? 'box box-x' : state === O ? 'box box-o' : 'box'}
+            onClick={() => clickHandler(state, index)}
+         >
+            {state === X ? x : state === O ? o : null}
+         </div>
+      );
+   });
 
-   if (gameOver(gameState)) {
-      console.log('Game over');
-   }
+   useEffect(() => {
+      const { isGameOver, boxIndexes, box } = gameOver(gameState);
+
+      if (isGameOver) {
+         boxIndexes.forEach(index => {
+            console.log(ticTacToe[index]);
+         });
+         // setGameState(initialGameState);
+      }
+   });
 
    return (
       <div className='container'>

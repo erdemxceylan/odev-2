@@ -40,9 +40,8 @@
   background-color: rgba(255, 5, 5, 1);
 }
 
-.box-o:hover > svg > path,
-.box-x:hover > svg > path {
-  fill: rgba(255, 255, 255, 1) !important;
+.box:hover > svg > path {
+  fill: rgba(255, 255, 255, 1);
 }
 
 .complete-o {
