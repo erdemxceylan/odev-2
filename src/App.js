@@ -22,6 +22,7 @@ const gameOver = array => {
       gameOverStates.forEach(state => {
          if (array[indexSet[0]] === state && array[indexSet[1]] === state && array[indexSet[2]] === state) {
             currentState = { isOver: true, boxIndexes: indexSet, stateOfBoxes: state };
+            return currentState;
          }
       });
    });
@@ -34,10 +35,10 @@ export default function App() {
    const [gameState, setGameState] = useState(initialGameState);
 
    const switchState = (newBoxState, index) => {
-      setBoxStates(currentBoxStates => {
-         const newBoxStates = [...currentBoxStates];
-         newBoxStates[index] = newBoxState;
-         return newBoxStates;
+      setBoxStates(currentboxStates => {
+         const newboxStates = [...currentboxStates];
+         newboxStates[index] = newBoxState;
+         return newboxStates;
       });
    };
 
@@ -65,12 +66,9 @@ export default function App() {
 
    const ticTacToe = boxStates.map((state, index) => {
       let className = state === X ? 'box box-x' : state === O ? 'box box-o' : 'box';
-
       if (gameState.isOver && gameState.boxIndexes.includes(index)) {
-         const completionStyles = gameState.stateOfBoxes === X ? 'complete-x' : gameState.stateOfBoxes === O ? 'complete-o' : '';
-         className += ' ' + completionStyles;
+         className += gameState.stateOfBoxes === X ? ' complete-x' : gameState.stateOfBoxes === O ? ' complete-o' : '';
       }
-
       return (
          <div
             className={className}
