@@ -1,6 +1,6 @@
 ## Result
 
-- [Play tic tac toe](https://tic-tac-toe-eight-dusky.vercel.app/)
+[Play tic tac toe](https://tic-tac-toe-eight-dusky.vercel.app/)
 
 ## Description
 
@@ -13,7 +13,3 @@
 - [Meryem Çetinkaya](https://github.com/meryemctnky)
 
 - [Emre Saltabaş](https://github.com/emresaltabas)
-
-## Lisans
-
-[MIT](https://choosealicense.com/licenses/mit/)
