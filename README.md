@@ -20,11 +20,11 @@ Install this project by using npm. Follow below steps:
 
 ## Authors
 
-- [Erdem CEYLAN](https://github.com/erdemxceylan)
+- [Erdem Ceylan](https://github.com/erdemxceylan)
 
-- [Meryem ÇETİNKAYA](https://github.com/meryemctnky)
+- [Meryem Çetinkaya](https://github.com/meryemctnky)
 
-- [Emre SALTABAŞ](https://github.com/emresaltabas)
+- [Emre Saltabaş](https://github.com/emresaltabas)
 
 ## Lisans
 
