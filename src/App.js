@@ -15,6 +15,7 @@ const initialGameState = { isOver: false, boxIndexes: null, stateOfBoxes: null }
 const gameOverIndexes = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
 const gameOverStates = [O, X];
 
+// checks whether the game is over or not
 const gameOver = array => {
    let currentState = initialGameState;
 
@@ -31,9 +32,10 @@ const gameOver = array => {
 };
 
 export default function App() {
-   const [boxStates, setBoxStates] = useState(initialBoxStates);
-   const [gameState, setGameState] = useState(initialGameState);
+   const [boxStates, setBoxStates] = useState(initialBoxStates); // state of the boxes
+   const [gameState, setGameState] = useState(initialGameState); // state of the game
 
+   // updates the boxes
    const switchState = (newBoxState, index) => {
       setBoxStates(currentboxStates => {
          const newboxStates = [...currentboxStates];
@@ -43,9 +45,11 @@ export default function App() {
    };
 
    function clickHandler(boxState, index) {
+      // if the game is over, reset the game
       if (gameState.isOver) {
          setBoxStates(initialBoxStates);
          setGameState(initialGameState);
+         // if the game is not over, update the box
       } else {
          switch (boxState) {
             case null:
@@ -64,6 +68,7 @@ export default function App() {
       }
    }
 
+   // array of the boxes as html elements
    const ticTacToe = boxStates.map((state, index) => {
       let className = state === X ? 'box box-x' : state === O ? 'box box-o' : 'box';
       if (gameState.isOver && gameState.boxIndexes.includes(index)) {
