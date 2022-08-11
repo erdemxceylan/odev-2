@@ -6,11 +6,7 @@ import './App.css';
 
 const X = 'X';
 const O = 'O';
-const initialBoxStates = [];
-for (let i = 0; i < 9; i++) {
-   initialBoxStates.push(null);
-}
-
+const initialBoxStates = Array(9).fill(null);
 const initialGameState = { isOver: false, boxIndexes: null, stateOfBoxes: null };
 const gameOverIndexes = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
 const gameOverStates = [O, X];
